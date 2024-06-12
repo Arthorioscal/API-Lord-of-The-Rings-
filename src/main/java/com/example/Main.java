@@ -103,6 +103,20 @@ public class Main {
         }
     }
 
+    public static double calculateSimilarity(String str1, String str2) {
+        int maxLength = Math.max(str1.length(), str2.length());
+        int minLength = Math.min(str1.length(), str2.length());
+        int commonChars = 0;
+    
+        for (int i = 0; i < minLength; i++) {
+            if (str1.charAt(i) == str2.charAt(i)) {
+                commonChars++;
+            }
+        }
+    
+        return (double) commonChars / maxLength;
+    }
+
 
     public static void main(String[] args) throws IOException, InterruptedException {
         // Fetching a QUOTE from the API
@@ -161,7 +175,7 @@ public class Main {
         System.out.println("Can you guess the character who said this quote?");
         String userGuess = scanner.nextLine();
 
-        if (userGuess.equalsIgnoreCase(character_scan.getName())) {
+        if (calculateSimilarity(userGuess.toLowerCase(), character_scan.getName().toLowerCase()) >= 0.45) {
             System.out.println("Correct! The quote is from " + character_scan.getName() + " in the movie " + character_scan.getMovieName() + ".");
         } else {
             System.out.println("Sorry, that's incorrect. The quote is from " + character_scan.getName() + " in the movie " + character_scan.getMovieName() + ".");
