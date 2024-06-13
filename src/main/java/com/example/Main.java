@@ -133,7 +133,7 @@ public class Main {
             
             while (!ui.hasNextInt()) {
                 ui.nextLine();  // consume the invalid input
-                System.out.println("Not a valid input little one!");
+                System.out.println("Not a valid input little one! Please enter 1 or 2.");
             }
             
             gameOption = ui.nextInt();
@@ -147,8 +147,8 @@ public class Main {
                 gameOption = ui.nextInt();
                 ui.nextLine();
             }
+            ui.nextLine();
         
-
             switch (gameOption) {
                 case 1:
                    boolean gameLoop = true;
