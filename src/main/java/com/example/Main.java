@@ -119,68 +119,64 @@ public class Main {
 
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        // Fetching a QUOTE from the API
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder().header("Authorization","Bearer qHiH75f6bA4YIbz61Ubf")
-            .uri(URI.create("https://the-one-api.dev/v2/quote")).build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode jsonResponse = mapper.readTree(response.body());
-        JsonNode docs = jsonResponse.get("docs");
+        Scanner ui = new Scanner(System.in);
 
-        // Selecting a random QUOTE from the API JSON
-        int randomIndex = new Random().nextInt(docs.size());
-        JsonNode randomQuote = docs.get(randomIndex);
+        boolean gameSet = true;
+        int gameOption; 
+        while (gameSet) {
 
-        System.out.println(randomQuote);
+            System.out.println("Welcome to the Middle-Earth guessing game!");
+            System.out.println("1 - PLAY!");
+            System.out.println("2 - EXIT!");
+            
+            gameOption = ui.nextInt();
+            ui.nextLine();
 
-        // Parsing the random quote json
-        String dialog = randomQuote.get("dialog").asText();
-        String character_id = randomQuote.get("character").asText();
-        String movie_id = randomQuote.get("movie").asText();
+            switch (gameOption) {
+                case 1:
+                   boolean gameLoop = true;
+                 while (gameLoop){
 
-        System.out.println("Dialog: " + dialog);
-        System.out.println("Character ID: " + character_id);
 
-        // Fetching the Character of the quote from his ID
-        String url = "https://the-one-api.dev/v2/character/" + character_id;
-        request = HttpRequest.newBuilder().header("Authorization","Bearer qHiH75f6bA4YIbz61Ubf")
-            .uri(URI.create(url))
-            .build();
-        
-        response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        
-        // Print character JSON
-        System.out.println(response.body());
+                    // Fechting API data
+                    Character gameChar = new Character();
+                    
 
-        // Parsing and getting the name of the character
-        JsonNode characterResponse = mapper.readTree(response.body());
-        JsonNode characterDocs = characterResponse.get("docs");
-        JsonNode character = characterDocs.get(0);
-        String name = character.get("name").asText();
+                    
+                    System.out.println("\n" +"Movie Name: " + gameChar.getMovieName());
+                    System.out.println("Can you guess the character who said this quote below?");
+                    System.out.println(gameChar.getDialog() + "\n");
+                    
+                    System.out.println("Who said that little hobbit?");
+                    String playerGuess = ui.nextLine();
 
-        System.out.println("Character Name: " + name);
-        
-        Character character_1 = new Character(); // Fetches a random quote from the API and gets the character
-        
-        System.out.println("Dialog: " + character_1.getDialog());
-        System.out.println("Character Name: " + character_1.getName());
-        System.out.println("Movie Name: " + character_1.getMovieName());
+                    if (calculateSimilarity(playerGuess.toLowerCase(), gameChar.getName().toLowerCase()) >= 0.2 ) {
+                        System.out.println("\n"+"Correct! The quote is from " + gameChar.getName() + " in the movie " + gameChar.getMovieName() + ".");
+                    } else {
+                        System.out.println("\n"+"Sorry, that's incorrect. The quote is from " + gameChar.getName() + " in the movie " + gameChar.getMovieName() + ". \n");
+                    }
 
-        Scanner scanner = new Scanner(System.in);
-        Character character_scan = new Character(); // Fetches a random quote from the API and gets the character
+                    System.out.println("Do you want to play again little hobbit? (Y/N)");
+                    String playAgain;
+                    playAgain = ui.nextLine();
 
-        System.out.println("Here's a quote: " + character_scan.getDialog());
-        System.out.println("Can you guess the character who said this quote?");
-        String userGuess = scanner.nextLine();
+                    if (playAgain == "n"){
+                        System.out.println("Thanks for playing you're a real hobbit!");
+                        gameSet = false;
+                        gameLoop = false;
+                    }
+                }
+                break;
 
-        if (calculateSimilarity(userGuess.toLowerCase(), character_scan.getName().toLowerCase()) >= 0.45) {
-            System.out.println("Correct! The quote is from " + character_scan.getName() + " in the movie " + character_scan.getMovieName() + ".");
-        } else {
-            System.out.println("Sorry, that's incorrect. The quote is from " + character_scan.getName() + " in the movie " + character_scan.getMovieName() + ".");
+                case 2:
+                    System.out.println("Thanks for playing you're a real hobbit!");
+                    gameSet = false;
+                    break;
+            
+                default:
+                    break;
+            }
         }
-
-        scanner.close();
     }
 }
