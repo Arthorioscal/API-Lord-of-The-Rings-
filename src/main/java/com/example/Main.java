@@ -123,8 +123,9 @@ public class Main {
         Scanner ui = new Scanner(System.in);
 
         boolean gameSet = true;
-        int gameOption; 
+
         while (gameSet) {
+            int gameOption; 
 
             System.out.println("\n" +"Welcome to the Middle-Earth guessing game!" + "\n");
             System.out.println("1 - Start the game already!");
@@ -132,13 +133,19 @@ public class Main {
             
             gameOption = ui.nextInt();
             ui.nextLine();
+            
+            while (gameOption != 1 || gameOption != 2) {
+                System.out.println("Not a valid input little one!");
+                gameOption = ui.nextInt();
+                ui.nextLine();
+            }
 
             switch (gameOption) {
                 case 1:
                    boolean gameLoop = true;
                  while (gameLoop == true){
 
-                    System.out.println("Getting a good quote... wait a bit.");
+                    System.out.println("\n" +"Getting a good quote... wait a bit.");
                     // Fechting API data
                     Character gameChar = new Character();
                     
@@ -161,7 +168,7 @@ public class Main {
                     String playAgain;
                     playAgain = ui.nextLine().toLowerCase();
 
-                    while (playAgain != "y" & playAgain != "n"){
+                    while (!playAgain.equalsIgnoreCase("y") & !playAgain.equalsIgnoreCase("n")){
                         System.out.println("Only (Y) or (N) my guy!");
                         playAgain = ui.nextLine().toLowerCase();
                     }
@@ -180,6 +187,7 @@ public class Main {
                     break;
             
                 default:
+                    System.out.println("Not a valid input little one!");
                     break;
             }
         }
