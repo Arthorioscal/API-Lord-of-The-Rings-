@@ -137,12 +137,8 @@ public class Main {
                 case 1:
                    boolean gameLoop = true;
                  while (gameLoop){
-
-
                     // Fechting API data
                     Character gameChar = new Character();
-                    
-
                     
                     System.out.println("\n" +"Movie Name: " + gameChar.getMovieName());
                     System.out.println("Can you guess the character who said this quote below?");
@@ -161,7 +157,7 @@ public class Main {
                     String playAgain;
                     playAgain = ui.nextLine();
 
-                    if (playAgain == "n"){
+                    if (playAgain.equalsIgnoreCase("n")){
                         System.out.println("Thanks for playing you're a real hobbit!");
                         gameSet = false;
                         gameLoop = false;
