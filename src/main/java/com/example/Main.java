@@ -126,9 +126,9 @@ public class Main {
         int gameOption; 
         while (gameSet) {
 
-            System.out.println("Welcome to the Middle-Earth guessing game!");
-            System.out.println("1 - PLAY!");
-            System.out.println("2 - EXIT!");
+            System.out.println("\n" +"Welcome to the Middle-Earth guessing game!" + "\n");
+            System.out.println("1 - Start the game already!");
+            System.out.println("2 - Actually i dont wan't to play right now" + "\n");
             
             gameOption = ui.nextInt();
             ui.nextLine();
@@ -136,7 +136,9 @@ public class Main {
             switch (gameOption) {
                 case 1:
                    boolean gameLoop = true;
-                 while (gameLoop){
+                 while (gameLoop == true){
+
+                    System.out.println("Getting a good quote... wait a bit.");
                     // Fechting API data
                     Character gameChar = new Character();
                     
@@ -155,7 +157,12 @@ public class Main {
 
                     System.out.println("Do you want to play again little hobbit? (Y/N)");
                     String playAgain;
-                    playAgain = ui.nextLine();
+                    playAgain = ui.nextLine().toLowerCase();
+
+                    while (playAgain != "y" & playAgain != "n"){
+                        System.out.println("Only (Y) or (N) my guy!");
+                        playAgain = ui.nextLine().toLowerCase();
+                    }
 
                     if (playAgain.equalsIgnoreCase("n")){
                         System.out.println("Thanks for playing you're a real hobbit!");
